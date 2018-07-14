@@ -7,7 +7,7 @@ import io from 'socket.io-client';
 const INTERVAL = 10;
 
 export default class App extends React.Component {
-  state = {name: DeviceInfo.getModel(), recordState: 'idle'};
+  state = {name: DeviceInfo.getModel(), recordState: 'idle', server: 'http://192.168.180.200:3000'};
   accelerationObservable = null;
   gyroscopeObservable = null;
   lastAccelTime = 0;
@@ -23,7 +23,7 @@ export default class App extends React.Component {
 
   onStartButtonPress() {
     this.setState({recordState: 'recording'})
-    socket = io('http://192.168.180.200:3000');
+    socket = io(this.state.server);
     socket.on('connect', () => {
       console.log('connected to socket.io server');
       socket.emit('config', {name: this.state.name})
@@ -64,6 +64,11 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+        <TextInput
+          style={{height: 100}}
+          value={this.state.server}
+          onChangeText={server => this.setState({server})}
+        />
         <TextInput
           style={{height: 100}}
           value={this.state.name}
