@@ -21,6 +21,7 @@
     "react": "16.3.1",
     "react-native": "~0.55.2",
     "react-native-device-info": "^0.21.5",
+    "react-native-keep-awake": "^3.0.1",
     "react-native-sensors": "^3.0.0",
     "socket.io-client": "^2.1.1"
   }

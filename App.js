@@ -3,11 +3,12 @@ import {StyleSheet, Text, View, TextInput, Button} from 'react-native';
 import {Accelerometer, Gyroscope} from 'react-native-sensors';
 import DeviceInfo from 'react-native-device-info';
 import io from 'socket.io-client';
+import KeepAwake from 'react-native-keep-awake';
 
 const INTERVAL = 10;
 
 export default class App extends React.Component {
-  state = {name: DeviceInfo.getModel(), recordState: 'idle', server: 'http://192.168.180.200:3000'};
+  state = {name: DeviceInfo.getModel(), recordState: 'idle', server: 'http://192.168.180.200:3000', room: 5555};
   accelerationObservable = null;
   gyroscopeObservable = null;
   lastAccelTime = 0;
@@ -71,6 +72,11 @@ export default class App extends React.Component {
         />
         <TextInput
           style={{height: 100}}
+          value={this.state.server}
+          onChangeText={server => this.setState({server})}
+        />
+        <TextInput
+          style={{height: 100}}
           value={this.state.name}
           onChangeText={name => this.setState({name})}
         />
@@ -88,6 +94,7 @@ export default class App extends React.Component {
             color="#841584"
           />
         )}
+        <KeepAwake />
       </View>
     );
   }

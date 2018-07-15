@@ -148,6 +148,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-keep-awake')
     compile project(':react-native-device-info')
     compile project(':react-native-sensors')
     compile fileTree(dir: "libs", include: ["*.jar"])

@@ -4394,6 +4394,10 @@ react-native-device-info@^0.21.5:
   version "0.21.5"
   resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-0.21.5.tgz#99478a2d68182e012297f2d63f2bd1b788106dee"
 
+react-native-keep-awake@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-keep-awake/-/react-native-keep-awake-3.0.1.tgz#916652b039732a93e0b6b6077e8905fe7e74abea"
+
 react-native-sensors@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/react-native-sensors/-/react-native-sensors-3.0.0.tgz#422bbf0dea54fdfdf56e20f80cc10018db56064a"
