@@ -8,7 +8,7 @@ import KeepAwake from 'react-native-keep-awake';
 const INTERVAL = 10;
 
 export default class App extends React.Component {
-  state = {name: DeviceInfo.getModel(), recordState: 'idle', server: 'http://192.168.180.200:3000', room: 5555};
+  state = {name: DeviceInfo.getModel(), recordState: 'idle', server: 'http://192.168.180.228:5000', room: 5555};
   accelerationObservable = null;
   gyroscopeObservable = null;
   lastAccelTime = 0;
@@ -23,11 +23,14 @@ export default class App extends React.Component {
   }
 
   onStartButtonPress() {
+    const {room} = this.state
     this.setState({recordState: 'recording'})
     socket = io(this.state.server);
     socket.on('connect', () => {
       console.log('connected to socket.io server');
       socket.emit('config', {name: this.state.name})
+
+      socket.emit('join', room)
     });
 
     new Accelerometer({updateInterval: INTERVAL})
@@ -37,7 +40,7 @@ export default class App extends React.Component {
           const {timestamp, x, y, z} = data;
           const {name} = this.state;
           if (timestamp > this.lastAccelTime) {
-            socket.emit('data', {type: 'accel', timestamp, x, y, z});
+            socket.emit('data', {type: 'accel', timestamp, x, y, z, roomId: room});
             this.lastAccelTime = timestamp;
           }
         });
@@ -52,7 +55,7 @@ export default class App extends React.Component {
           const {timestamp, x, y, z} = data;
           const {name} = this.state;
           if (timestamp > this.lastGypoTime) {
-            socket.emit('data', {type: 'gyro', timestamp, x, y, z});
+            socket.emit('data', {type: 'gyro', timestamp, x, y, z, roomId: room});
             this.lastGypoTime = timestamp;
           }
         });
@@ -67,8 +70,8 @@ export default class App extends React.Component {
       <View style={styles.container}>
         <TextInput
           style={{height: 100}}
-          value={this.state.server}
-          onChangeText={server => this.setState({server})}
+          value={this.state.room+""}
+          onChangeText={room => this.setState({room: +room})}
         />
         <TextInput
           style={{height: 100}}
